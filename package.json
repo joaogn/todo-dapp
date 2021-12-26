@@ -5,7 +5,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "truffle test"
+  },
+  "directories": {
+    "test": "test"
   },
   "dependencies": {
     "next": "12.0.7",
@@ -14,6 +18,8 @@
   },
   "devDependencies": {
     "eslint": "8.5.0",
-    "eslint-config-next": "12.0.7"
+    "eslint-config-next": "12.0.7",
+    "truffle": "^5.4.26",
+    "truffle-contract": "^4.0.31"
   }
 }
