@@ -1,48 +1,32 @@
 import styles from '../styles/Home.module.css'
-import { useSimpleStorageMethods } from '../services/hooks/useSimpleStorageMethods'
-import { useEffect, useState,useCallback } from 'react';
+import { useWeb3Store } from '../stores/Web3Store';
+import { useUserStore } from '../stores/UserStore';
+
 
 export default function Home() {
-  const [value,setValue] = useState(0);
-  const {loading, methods, account} = useSimpleStorageMethods()
+  const web3 = useWeb3Store(state => state.web3);
+  const user = useUserStore(state => state.user);
+  const setUser = useUserStore(state => state.setUser);
 
-  const handleSaveRandomValue = async() => {
-    const randomValue = Math.ceil(Math.random() * 10);
-    await methods.set(randomValue).send({ from: account });
-    await getValue();
+  const handleSignIn = async() => {
+   const accounts = await web3.eth.getAccounts();
+   console.log({accounts})
+   try{
+    await web3.eth.personal.sign("Welcome to Todo D'app", accounts[0],null)
+    setUser({account: accounts[0]})
+   } catch(err){
+     console.log({err})
+   }
   }
 
-  const getValue = useCallback(async() => {
-    const result = await methods.get().call();
-    setValue(result);
-  },[methods])
-
-  useEffect(() => {
-    if(methods){
-      getValue();
-    }
-  },[getValue, methods])
- 
   return (
-    <>
-    {loading ? (      
-      <h1 className={styles.title}>
-          loading...
-      </h1>
-      ) : methods && (
-        <main className={styles.main}>
-          <h1 className={styles.title}>
-            {`Saved Value ${value}`}
-          </h1>
-          <button 
-            style={{background:'blue', border:'none', borderRadius:8, height: 56,color:'white',marginTop:16}} 
-            onClick={handleSaveRandomValue}
-            >
-              Save Randon Value
-            </button>
-        </main>
-    )}
-    </>
-  
+    <main className={styles.main}>
+      <button 
+        style={{background:'blue', border:'none', borderRadius:8, height: 56,color:'white',marginTop:16, width: 200}} 
+        onClick={handleSignIn}
+      >
+        Sign In
+      </button>
+    </main>
   )
 }
