@@ -1,5 +1,8 @@
 import create from 'zustand';
+import { RelayProvider } from '@opengsn/provider';
 import Web3 from "web3";
+import Paymaster from '../../build/gsn/Paymaster.json'
+
 
 declare global {
   interface Window {
@@ -17,10 +20,26 @@ export const useWeb3Store = create<Web3StoreState>((set) => ({
   web3: null,
   getWeb3: async() => {
     if (window.ethereum) {
-      const web3 = new Web3(window.ethereum);
+
+      const gsnConfig = {
+        relayLookupWindowBlocks: 600000,
+        loggerConfigration: {
+          logLevel: 'debug',
+        },
+        paymasterAddress: Paymaster.address
+      }
+     
+      
+      const gsnProvider = RelayProvider.newProvider({ provider: window.ethereum , config: gsnConfig })
+      await gsnProvider.init()
+      const account = gsnProvider.newAccount();
+  
+      localStorage.setItem("ephemeral:account",JSON.stringify(account));
+      const newWeb3 = new Web3(gsnProvider)
+      
       try {
         await window.ethereum.enable();
-        set(state => ({web3}))
+        set(state => ({web3:newWeb3}))
       } catch (error) {
         throw new Error(error)
       }
@@ -33,7 +52,7 @@ export const useWeb3Store = create<Web3StoreState>((set) => ({
     }
     else {
       const provider = new Web3.providers.HttpProvider(
-        "http://127.0.0.1:7545"
+        "http://127.0.0.1:8545"
       );
       const web3 = new Web3(provider);
       console.log("No web3 instance injected, using Local web3.");

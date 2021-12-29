@@ -1,22 +1,26 @@
 import styles from '../styles/Home.module.css'
 import { useSimpleStorageMethods } from '../hooks/useSimpleStorageMethods'
 import { useEffect, useState,useCallback } from 'react';
-import { useUserStore } from '../stores/UserStore';
 
 export default function Dashboard() {
   const [value,setValue] = useState(0);
   const {loading, methods} = useSimpleStorageMethods()
-  const user = useUserStore(state => state.user);
 
   const handleSaveRandomValue = async() => {
+
+    const acc = localStorage.getItem("ephemeral:account");
+    if(!acc) return;
+    const ephemeralAccount = JSON.parse(acc);
     const randomValue = Math.ceil(Math.random() * 10);
-    await methods.set(randomValue).send({ from: user.account });
+    await methods.set(randomValue).send({ from: ephemeralAccount.address });
     await getValue();
+
   }
 
   const getValue = useCallback(async() => {
 
     const result = await methods.get().call();
+  
     setValue(result);
   },[methods])
 

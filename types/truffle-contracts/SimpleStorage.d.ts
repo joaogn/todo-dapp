@@ -7,12 +7,25 @@ import { EventData, PastEventOptions } from "web3-eth-contract";
 
 export interface SimpleStorageContract
   extends Truffle.Contract<SimpleStorageInstance> {
-  "new"(meta?: Truffle.TransactionDetails): Promise<SimpleStorageInstance>;
+  "new"(
+    forwarder: string,
+    meta?: Truffle.TransactionDetails
+  ): Promise<SimpleStorageInstance>;
 }
 
 type AllEvents = never;
 
 export interface SimpleStorageInstance extends Truffle.ContractInstance {
+  /**
+   * return if the forwarder is trusted to forward relayed transactions to us. the forwarder is required to verify the sender's signature, and verify the call is not a replay.
+   */
+  isTrustedForwarder(
+    forwarder: string,
+    txDetails?: Truffle.TransactionDetails
+  ): Promise<boolean>;
+
+  trustedForwarder(txDetails?: Truffle.TransactionDetails): Promise<string>;
+
   set: {
     (x: number | BN | string, txDetails?: Truffle.TransactionDetails): Promise<
       Truffle.TransactionResponse<AllEvents>
@@ -33,7 +46,19 @@ export interface SimpleStorageInstance extends Truffle.ContractInstance {
 
   get(txDetails?: Truffle.TransactionDetails): Promise<BN>;
 
+  versionRecipient(txDetails?: Truffle.TransactionDetails): Promise<string>;
+
   methods: {
+    /**
+     * return if the forwarder is trusted to forward relayed transactions to us. the forwarder is required to verify the sender's signature, and verify the call is not a replay.
+     */
+    isTrustedForwarder(
+      forwarder: string,
+      txDetails?: Truffle.TransactionDetails
+    ): Promise<boolean>;
+
+    trustedForwarder(txDetails?: Truffle.TransactionDetails): Promise<string>;
+
     set: {
       (
         x: number | BN | string,
@@ -54,6 +79,8 @@ export interface SimpleStorageInstance extends Truffle.ContractInstance {
     };
 
     get(txDetails?: Truffle.TransactionDetails): Promise<BN>;
+
+    versionRecipient(txDetails?: Truffle.TransactionDetails): Promise<string>;
   };
 
   getPastEvents(event: string): Promise<EventData[]>;
