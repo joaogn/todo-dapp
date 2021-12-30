@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@opengsn/cli": "^2.2.4",
-    "@opengsn/contracts": "2.2.1",
+    "@opengsn/contracts": "^2.2.4",
     "@opengsn/provider": "^2.2.4",
     "@openzeppelin/test-environment": "^0.1.9",
     "fs": "^0.0.1-security",

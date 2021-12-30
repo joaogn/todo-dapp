@@ -1407,13 +1407,6 @@
     web3-eth-contract "1.2.6"
     web3-utils "1.2.6"
 
-"@opengsn/contracts@2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@opengsn/contracts/-/contracts-2.2.1.tgz#1dc7c54df012c44c1b4da215dd1aeb535a84b5d2"
-  integrity sha512-Rl869w7EDKvYFMe0WL90Z/D4ouxxgsARJlSncJ/0Pm6/oBi8abA5Z05flePWdKwBssKFpzeM7ej7zzFFDR6UyQ==
-  dependencies:
-    "@openzeppelin/contracts" "^3.4.0-solc-0.7"
-
 "@opengsn/contracts@^2.2.4":
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/@opengsn/contracts/-/contracts-2.2.4.tgz#8b46baf2f1f86f30fbcffa1347df3fad2a24d55c"
@@ -1461,11 +1454,6 @@
   dependencies:
     find-up "^4.1.0"
     fs-extra "^8.1.0"
-
-"@openzeppelin/contracts@^3.4.0-solc-0.7":
-  version "3.4.2"
-  resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-3.4.2.tgz#d81f786fda2871d1eb8a8c5a73e455753ba53527"
-  integrity sha512-z0zMCjyhhp4y7XKAcDAi3Vgms4T2PstwBdahiO0+9NaGICQKjynK3wduSRplTgk4LXmoO1yfDGO5RbjKYxtuxA==
 
 "@openzeppelin/contracts@^4.2.0":
   version "4.4.1"

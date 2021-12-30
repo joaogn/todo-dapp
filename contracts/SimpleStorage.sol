@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.7.6;
+pragma solidity >=0.8.6;
 
 import "@opengsn/contracts/src/BaseRelayRecipient.sol";
 
 contract SimpleStorage is BaseRelayRecipient {
 
   constructor(address forwarder) {
-      trustedForwarder = forwarder;
+      _setTrustedForwarder(forwarder);
   }
 
   uint storedData = 0;
@@ -21,7 +21,7 @@ contract SimpleStorage is BaseRelayRecipient {
     return storedData;
   }
 
-  function versionRecipient() external override view returns (string memory) {
+  function versionRecipient() external override pure returns (string memory) {
 		return "2.2.0";
 	}
 }
