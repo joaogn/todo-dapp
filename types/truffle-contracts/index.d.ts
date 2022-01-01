@@ -4,15 +4,18 @@
 
 import { MigrationsContract } from "./Migrations";
 import { SimpleStorageContract } from "./SimpleStorage";
+import { TodoContract } from "./Todo";
 
 declare global {
   namespace Truffle {
     interface Artifacts {
       require(name: "Migrations"): MigrationsContract;
       require(name: "SimpleStorage"): SimpleStorageContract;
+      require(name: "Todo"): TodoContract;
     }
   }
 }
 
 export { MigrationsContract, MigrationsInstance } from "./Migrations";
 export { SimpleStorageContract, SimpleStorageInstance } from "./SimpleStorage";
+export { TodoContract, TodoInstance } from "./Todo";

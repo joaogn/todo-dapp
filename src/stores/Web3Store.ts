@@ -30,12 +30,12 @@ export const useWeb3Store = create<Web3StoreState>((set) => ({
       }
      
       
-      const gsnProvider = RelayProvider.newProvider({ provider: window.ethereum , config: gsnConfig })
-      await gsnProvider.init()
-      const account = gsnProvider.newAccount();
+     // const gsnProvider = RelayProvider.newProvider({ provider: window.ethereum , config: gsnConfig })
+      //await gsnProvider.init()
+     // const account = gsnProvider.newAccount();
   
-      localStorage.setItem("ephemeral:account",JSON.stringify(account));
-      const newWeb3 = new Web3(gsnProvider)
+      //localStorage.setItem("ephemeral:account",JSON.stringify(account));
+      const newWeb3 = new Web3(window.ethereum)
       
       try {
         await window.ethereum.enable();
@@ -52,11 +52,11 @@ export const useWeb3Store = create<Web3StoreState>((set) => ({
     }
     else {
       const provider = new Web3.providers.HttpProvider(
-        "http://127.0.0.1:8545"
+        "http://127.0.0.1:7545"
       );
       const web3 = new Web3(provider);
       console.log("No web3 instance injected, using Local web3.");
       set(state => ({web3}))
-    }
+   }
   }
 }) )

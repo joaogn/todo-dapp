@@ -12,7 +12,6 @@ contract SimpleStorage is BaseRelayRecipient {
   uint storedData = 0;
 
   
-
   function set(uint x) public {
     storedData = x;
   }

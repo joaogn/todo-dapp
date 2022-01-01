@@ -1,6 +1,6 @@
 import {useEffect,useState} from 'react';
-import { SimpleStorageInstance } from '../../types/truffle-contracts/SimpleStorage';
-import SimpleStorageContract from "../../build/contracts/SimpleStorage.json";
+import { TodoInstance } from '../../types/truffle-contracts/Todo';
+import TodoContract from "../../build/contracts/Todo.json";
 import { useWeb3Store } from '../stores/Web3Store';
 import { AbiItem } from 'web3-utils';
 
@@ -17,10 +17,10 @@ export const useSimpleStorageMethods = () => {
       
       const networkId = await web3.eth.net.getId();
     
-      const deployedNetwork = SimpleStorageContract.networks[networkId];
+      const deployedNetwork = TodoContract.networks[networkId];
     
       const simpleStorageInstance = new web3.eth.Contract(
-        SimpleStorageContract.abi as AbiItem[],
+        TodoContract.abi as AbiItem[],
         deployedNetwork && deployedNetwork.address,
       );
       
